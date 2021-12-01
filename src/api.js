@@ -16,7 +16,27 @@ export const login = (username, password) => {
     connect("POST", url);
 
     try {
+        console.log("Sending payload " + jsonPayload);
         xhr.send(jsonPayload);
+        console.log("api response " + xhr.responseText);
+        var jsonObject = JSON.parse(xhr.responseText);
+        return jsonObject;
+    } catch (err) {
+        return null;
+    }
+}
+
+export const createAdmin = (username, password) => {
+    var jsonDict = { username: username, password: password };
+    var jsonPayload = JSON.stringify(jsonDict);
+
+    var url = urlBase + '/createAdmin.php';
+    connect("POST", url);
+
+    try {
+        console.log("Sending payload " + jsonPayload);
+        xhr.send(jsonPayload);
+        console.log("api response " + xhr.responseText);
         var jsonObject = JSON.parse(xhr.responseText);
         return jsonObject;
     } catch (err) {

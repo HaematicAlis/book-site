@@ -1,26 +1,36 @@
 import React from 'react';
 import { login } from './api.js';
+import { Page } from './App.js'; 
 
-const Login = () => {
+const Login = ({setCurrentPage, setCurrentUser}) => {
+
     const doLogin = () => {
-        var username = document.getElementById("username").value;
-        var password = document.getElementById("password").value;
+        var usernameAttempt = document.getElementById("username").value;
+        var passwordAttempt = document.getElementById("password").value;
+
+        if(usernameAttempt === "" && passwordAttempt === ""){
+            //TODO: Remove this entire if statement
+            console.log("HEY!!! I'M OVERRIDING THE USERNAME AND PASSWORD FOR DEV CONVENIENCE! THIS SHOULD BE REMOVED IN PROD")
+            usernameAttempt = "root"
+            passwordAttempt = "superpassword"
+        }
         
-        var data = login(username, password);
-        document.getElementById("empId").innerHTML = 'empId: ' + data.empId;
-        document.getElementById("isAdmin").innerHTML = 'isAdmin: ' + data.isAdmin;
-        document.getElementById("status").innerHTML = 'status: ' + data.status;
+        var data = login(usernameAttempt, passwordAttempt);
+        if(data.status === "success"){
+            setCurrentUser(data);
+            setCurrentPage(Page.AdminDashboard)
+        }else{
+            document.getElementById("username").value = "";
+            document.getElementById("password").value = "";
+        }
     }
 
     return (
         <div className="loginPage">
             <h3>Login</h3>
-            <input type="text" id="username" /><br />
-            <input type="text" id="password" /><br />
+            <input type="text" id="username" placeholder="username"/><br />
+            <input type="text" id="password" placeholder="password"/><br />
             <button type="button" onClick={doLogin}>Login</button><br />
-            <p id="empId">empId: ?</p>
-            <p id="isAdmin">isAdmin: ?</p>
-            <p id="status">status: none</p>
         </div>
     );
 }

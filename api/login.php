@@ -14,12 +14,12 @@
         die("Connection failed " . $conn->connect_error);
     }
 
-    $query = "SELECT empId, isAdmin FROM employee WHERE username='" . $user . "' AND password='" . $pass . "';";
+    $query = "SELECT * FROM employee WHERE username='" . $user . "' AND password='" . $pass . "';";
     $result = mysqli_query($conn, $query);
 
     if($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        echo '{"empId":' . $row["empId"] . ', "isAdmin":' . $row["isAdmin"] . ', "status":"success"}';
+        echo '{"empId":' . $row["empId"] . ', "isAdmin":' . $row["isAdmin"] . ', "username":"' . $row["username"] . '", "password":"' . $row["password"] . '", "status":"success"}';
     } else {
         echo '{"status":"failure"}';
     }
