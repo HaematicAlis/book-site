@@ -2,7 +2,8 @@
   text-align: center;
 }
 
-.redbutton {background-color: #ff5454;} /* Blue */
+.redbutton {background-color: #ff5454;} 
+.greenbutton {background-color: #1ee352;}
 
 
 .center {

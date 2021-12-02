@@ -9,16 +9,18 @@ const ProfessorDashboard = ({ setCurrentPage, currentUser, currentRequestForm, s
             console.log(currentRequestForm)
             document.getElementById("requestFormGroup").hidden = false
             document.getElementById("tableHeader").innerHTML = "Book Request Form for semester " + currentRequestForm.semester
-            document.getElementById("table").innerHTML = "<tr> <th></th> <th>ISBN</th> <th>Title</th> <th>Authors</th> <th>Edition</th> <th>Publisher</th> </tr>"
+            document.getElementById("table").innerHTML = ""
             var i = 0
             currentRequestForm.books.forEach(book => {
                 document.getElementById("table").innerHTML += 
-                '<tr> <td><input type="checkbox" id="check'+ i++ +'"></td><td> ' + book.isbn + 
+                '<tr'+(i%2 === 0 ? ' style="background-color: rgb(221, 221, 221)"':'') + 
+                '> <td><input type="checkbox" id="check'+ i++ +'"></td><td> ' + book.isbn + 
                 '</td> <td>' + book.title + 
                 '</td> <td>' + book.authorNames + 
                 '</td> <td>' + book.edition + 
                 '</td> <td>' + book.publisher + '</td> </tr>'
             });
+
         }
     }
 
@@ -90,13 +92,23 @@ const ProfessorDashboard = ({ setCurrentPage, currentUser, currentRequestForm, s
                 <input type="text" id="semesterEntry" placeholder="semester" /><br />
                 <button style={{ margin: "1em" }} type="button" onClick={doGetRequestForm}>View/Edit Request Form</button><br />
             </div>
-            <div id="requestFormGroup" hidden={true}>
-                <p id="tableHeader">Book Request Form for semester ?</p>
-                <table id="table" border="1" className="center">
+            <table className="center" style={{border: "2px solid grey"}} id="requestFormGroup" hidden={true}> <tbody> <tr> <td>
+                <h3 id="tableHeader"> <u>Book Request Form for semester ?</u></h3>
+                <table style={{border: "2px solid grey"}} className="center">
+                    <thead>
+                        <tr> 
+                            <th></th> <th>ISBN</th> <th>Title</th> <th>Authors</th> <th>Edition</th> <th>Publisher</th> 
+                        </tr>
+                    </thead>
+                    <tbody id="table">
+
+                    </tbody>
                 </table>
+                <br/>
                 <div id="newBookEntry" > 
-                    <table className="center">
+                    <table className="center" style={{border: "2px solid grey"}}>
                         <tbody>
+                            <tr><td></td><th>Add New Book</th></tr>
                             <tr>
                                 <td><input type="text" id="isbnEntry" placeholder="isbn" /></td>
                                 <td><input type="text" id="titleEntry" placeholder="title" /></td>
@@ -105,7 +117,7 @@ const ProfessorDashboard = ({ setCurrentPage, currentUser, currentRequestForm, s
                             <tr>
                                 <td><input type="text" id="editionEntry" placeholder="edition" /></td>
                                 <td><input type="text" id="publisherEntry" placeholder="publisher" /></td>
-                                <td><button type="button" onClick={doAddNewBook}>Add New Book</button></td>
+                                <td><button type="button" className="greenbutton" onClick={doAddNewBook}>Add New Book</button></td>
                             </tr>
                         </tbody>
                     </table>
@@ -116,7 +128,7 @@ const ProfessorDashboard = ({ setCurrentPage, currentUser, currentRequestForm, s
                     <button style={{ margin: "1em" }} type="button" id="deleteSelected" onClick={doDeleteSelected}>Delete Selected Books</button>
                     <button style={{ margin: "1em" }} type="button" id="deleteRequestForm" className="redbutton" onClick={doDeleteRequestForm}>Delete Request Form</button><br />
                 </div>
-            </div>
+            </td></tr></tbody></table>
         </div>
     );
 }
