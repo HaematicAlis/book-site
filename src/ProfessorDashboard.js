@@ -1,16 +1,13 @@
 import React from 'react';
 import { Page } from './App.js';
-import { deleteBooksFromRequestForm, deleteRequestForm, getBooksFromRequestForm, getRequestForm } from './api.js';
+import { createBook, deleteBooksFromRequestForm, deleteRequestForm, getBooksFromRequestForm, getRequestForm } from './api.js';
 
 const ProfessorDashboard = ({ setCurrentPage, currentUser, currentRequestForm, setCurrentRequestForm }) => {
 
     const updateTable = () => {
         if(currentRequestForm != null){
             console.log(currentRequestForm)
-            document.getElementById("deleteRequestForm").hidden = false
-            document.getElementById("tableHeader").hidden = false
-            document.getElementById("table").hidden = false
-            document.getElementById("deleteSelected").hidden = false
+            document.getElementById("requestFormGroup").hidden = false
             document.getElementById("tableHeader").innerHTML = "Book Request Form for semester " + currentRequestForm.semester
             document.getElementById("table").innerHTML = "<tr> <th></th> <th>ISBN</th> <th>Title</th> <th>Authors</th> <th>Edition</th> <th>Publisher</th> </tr>"
             var i = 0
@@ -36,10 +33,7 @@ const ProfessorDashboard = ({ setCurrentPage, currentUser, currentRequestForm, s
             updateTable()
         } else {
             setCurrentRequestForm(null)
-            document.getElementById("tableHeader").hidden = true
-            document.getElementById("table").hidden = true
-            document.getElementById("deleteSelected").hidden = true
-            document.getElementById("deleteRequestForm").hidden = true
+            document.getElementById("requestFormGroup").hidden = true
         }
     }
 
@@ -62,7 +56,7 @@ const ProfessorDashboard = ({ setCurrentPage, currentUser, currentRequestForm, s
         console.log(res)
         updateRequestForm(currentRequestForm.semester)
     }
-
+    
     const doDeleteRequestForm = () => {
         var isbns = []
         currentRequestForm.books.forEach(book => {
@@ -71,12 +65,19 @@ const ProfessorDashboard = ({ setCurrentPage, currentUser, currentRequestForm, s
         deleteBooksFromRequestForm(isbns.join(), currentRequestForm.requestId)
         deleteRequestForm(currentRequestForm.requestId)
         setCurrentRequestForm(null)
-        document.getElementById("tableHeader").hidden = true
-        document.getElementById("table").hidden = true
-        document.getElementById("deleteSelected").hidden = true
-        document.getElementById("deleteRequestForm").hidden = true
+        document.getElementById("requestFormGroup").hidden = true
     }
-
+    
+    const doAddNewBook = () => {
+        var isbn = parseInt(document.getElementById("isbnEntry").value, 10);
+        var title = document.getElementById("titleEntry").value;
+        var author = document.getElementById("authorEntry").value;
+        var edition = parseInt(document.getElementById("editionEntry").value, 10);
+        var publisher = document.getElementById("publisherEntry").value;
+        createBook(isbn, title, author, edition, publisher, currentRequestForm.requestId)
+        updateRequestForm(currentRequestForm.semester)
+    }
+    
     return (
         <div className="loginPage">
             
@@ -89,14 +90,32 @@ const ProfessorDashboard = ({ setCurrentPage, currentUser, currentRequestForm, s
                 <input type="text" id="semesterEntry" placeholder="semester" /><br />
                 <button style={{ margin: "1em" }} type="button" onClick={doGetRequestForm}>View/Edit Request Form</button><br />
             </div>
-            <p id="tableHeader" hidden={true}>Book Request Form for semester ?</p>
-            <table id="table" hidden={true} border="1" className="center">
-            </table>
-            <div style={{
-                display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center",
-            }}>
-                <button style={{ margin: "1em" }} type="button" id="deleteSelected" hidden={true} onClick={doDeleteSelected}>Delete Selected Books</button>
-                <button style={{ margin: "1em" }} type="button" id="deleteRequestForm" hidden={true} className="redbutton" onClick={doDeleteRequestForm}>Delete Request Form</button><br />
+            <div id="requestFormGroup" hidden={true}>
+                <p id="tableHeader">Book Request Form for semester ?</p>
+                <table id="table" border="1" className="center">
+                </table>
+                <div id="newBookEntry" > 
+                    <table className="center">
+                        <tbody>
+                            <tr>
+                                <td><input type="text" id="isbnEntry" placeholder="isbn" /></td>
+                                <td><input type="text" id="titleEntry" placeholder="title" /></td>
+                                <td><input type="text" id="authorEntry" placeholder="author(s)" /></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" id="editionEntry" placeholder="edition" /></td>
+                                <td><input type="text" id="publisherEntry" placeholder="publisher" /></td>
+                                <td><button type="button" onClick={doAddNewBook}>Add New Book</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style={{
+                    display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center",
+                }}>
+                    <button style={{ margin: "1em" }} type="button" id="deleteSelected" onClick={doDeleteSelected}>Delete Selected Books</button>
+                    <button style={{ margin: "1em" }} type="button" id="deleteRequestForm" className="redbutton" onClick={doDeleteRequestForm}>Delete Request Form</button><br />
+                </div>
             </div>
         </div>
     );

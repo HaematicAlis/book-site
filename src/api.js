@@ -152,3 +152,21 @@ export const deleteRequestForm = (requestId) => {
         return null;
     }
 }
+
+export const createBook = (isbn, title, authorNames, edition, publisher, requestId) => {
+    var jsonDict = { isbn: isbn, title: title, authorNames: authorNames, edition: edition, publisher: publisher, requestId: requestId };
+    var jsonPayload = JSON.stringify(jsonDict);
+
+    var url = urlBase + '/createBook.php';
+    connect("POST", url);
+
+    try {
+        console.log("Sending payload " + jsonPayload);
+        xhr.send(jsonPayload);
+        console.log("api response " + xhr.responseText);
+        var jsonObject = JSON.parse(xhr.responseText);
+        return jsonObject
+    } catch (err) {
+        return null;
+    }
+}
