@@ -1,12 +1,13 @@
 import React from 'react';
 import { Page } from './App.js';
-import { deleteBooksFromRequestForm, getBooksFromRequestForm, getRequestForm } from './api.js';
+import { deleteBooksFromRequestForm, deleteRequestForm, getBooksFromRequestForm, getRequestForm } from './api.js';
 
 const ProfessorDashboard = ({ setCurrentPage, currentUser, currentRequestForm, setCurrentRequestForm }) => {
 
     const updateTable = () => {
         if(currentRequestForm != null){
             console.log(currentRequestForm)
+            document.getElementById("deleteRequestForm").hidden = false
             document.getElementById("tableHeader").hidden = false
             document.getElementById("table").hidden = false
             document.getElementById("deleteSelected").hidden = false
@@ -38,6 +39,7 @@ const ProfessorDashboard = ({ setCurrentPage, currentUser, currentRequestForm, s
             document.getElementById("tableHeader").hidden = true
             document.getElementById("table").hidden = true
             document.getElementById("deleteSelected").hidden = true
+            document.getElementById("deleteRequestForm").hidden = true
         }
     }
 
@@ -61,6 +63,20 @@ const ProfessorDashboard = ({ setCurrentPage, currentUser, currentRequestForm, s
         updateRequestForm(currentRequestForm.semester)
     }
 
+    const doDeleteRequestForm = () => {
+        var isbns = []
+        currentRequestForm.books.forEach(book => {
+            isbns.push(book.isbn)
+        });
+        deleteBooksFromRequestForm(isbns.join(), currentRequestForm.requestId)
+        deleteRequestForm(currentRequestForm.requestId)
+        setCurrentRequestForm(null)
+        document.getElementById("tableHeader").hidden = true
+        document.getElementById("table").hidden = true
+        document.getElementById("deleteSelected").hidden = true
+        document.getElementById("deleteRequestForm").hidden = true
+    }
+
     return (
         <div className="loginPage">
             
@@ -76,7 +92,12 @@ const ProfessorDashboard = ({ setCurrentPage, currentUser, currentRequestForm, s
             <p id="tableHeader" hidden={true}>Book Request Form for semester ?</p>
             <table id="table" hidden={true} border="1" className="center">
             </table>
-            <button style={{ margin: "1em" }} type="button" id="deleteSelected" hidden={true} onClick={doDeleteSelected}>Delete Selected Books</button>
+            <div style={{
+                display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center",
+            }}>
+                <button style={{ margin: "1em" }} type="button" id="deleteSelected" hidden={true} onClick={doDeleteSelected}>Delete Selected Books</button>
+                <button style={{ margin: "1em" }} type="button" id="deleteRequestForm" hidden={true} className="redbutton" onClick={doDeleteRequestForm}>Delete Request Form</button><br />
+            </div>
         </div>
     );
 }
