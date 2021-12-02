@@ -8,12 +8,12 @@ const Login = ({setCurrentPage, setCurrentUser}) => {
         var usernameAttempt = document.getElementById("username").value;
         var passwordAttempt = document.getElementById("password").value;
 
-        // if(usernameAttempt === "" && passwordAttempt === ""){
-        //     //TODO: Remove this entire if statement
-        //     console.log("HEY!!! I'M OVERRIDING THE USERNAME AND PASSWORD FOR DEV CONVENIENCE! THIS SHOULD BE REMOVED IN PROD")
-        //     usernameAttempt = "root"
-        //     passwordAttempt = "superpassword"
-        // }
+        if(usernameAttempt === "" && passwordAttempt === ""){
+            //TODO: Remove this entire if statement
+            console.log("HEY!!! I'M OVERRIDING THE USERNAME AND PASSWORD FOR DEV CONVENIENCE! THIS SHOULD BE REMOVED IN PROD")
+            usernameAttempt = "admin"
+            passwordAttempt = "admin"
+        }
         
         var data = login(usernameAttempt, passwordAttempt);
         if(data.status === "success"){

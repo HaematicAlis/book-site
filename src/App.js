@@ -4,14 +4,14 @@ import { useState } from 'react';
 import Login from './Login.js';
 import AdminDashboard from './AdminDashboard.js';
 import ProfessorDashboard from './ProfessorDashboard.js';
-import CreateAdmin from './CreateAdmin.js';
+import ModifyAdmin from './ModifyAdmin.js';
 
 // Enum for page types
 export class Page {
   static Login = new Page("Login")
   static AdminDashboard = new Page("AdminDashboard")
   static ProfessorDashboard = new Page("ProfessorDashboard")
-  static CreateAdmin = new Page("CreateAdmin")
+  static ModifyAdmin = new Page("ModifyAdmin")
 
   constructor(name) {
     this.name = name
@@ -40,10 +40,10 @@ const App = () => {
         <div className="App">
            <ProfessorDashboard setCurrentPage={setCurrentPage} currentUser={setCurrentPage, currentUser}/>
        </div>);
-    case Page.CreateAdmin:
+    case Page.ModifyAdmin:
       return (
         <div className="App">
-           <CreateAdmin setCurrentPage={setCurrentPage} currentUser={setCurrentPage, currentUser}/>
+           <ModifyAdmin setCurrentPage={setCurrentPage} currentUser={setCurrentPage, currentUser}/>
        </div>);
   }
 }
