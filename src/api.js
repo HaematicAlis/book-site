@@ -79,3 +79,59 @@ export const changePassword = (username, oldPassword, newPassword) => {
         return null;
     }
 }
+
+export const getRequestForm = (semester, empId) => {
+    var jsonDict = { semester: semester, empId: empId };
+    var jsonPayload = JSON.stringify(jsonDict);
+
+    var url = urlBase + '/getRequestForm.php';
+    connect("POST", url);
+
+    try {
+        console.log("Sending payload " + jsonPayload);
+        xhr.send(jsonPayload);
+        console.log("api response " + xhr.responseText);
+        var jsonObject = JSON.parse(xhr.responseText);
+        return jsonObject;
+    } catch (err) {
+        return null;
+    }
+}
+
+export const getBooksFromRequestForm = (requestId) => {
+    var jsonDict = { requestId: requestId };
+    var jsonPayload = JSON.stringify(jsonDict);
+
+    var url = urlBase + '/getBooksFromRequestForm.php';
+    connect("POST", url);
+
+    try {
+        console.log("Sending payload " + jsonPayload);
+        xhr.send(jsonPayload);
+        console.log("api response " + xhr.responseText);
+        var jsonObject = JSON.parse(xhr.responseText);
+        if(jsonObject.status === "success") return jsonObject.books;
+        else return null;
+    } catch (err) {
+        return null;
+    }
+}
+
+export const deleteBooksFromRequestForm = (isbns, requestId) => {
+    var jsonDict = { isbns: isbns, requestId: requestId };
+    var jsonPayload = JSON.stringify(jsonDict);
+
+    var url = urlBase + '/deleteBooksFromRequestForm.php';
+    connect("POST", url);
+
+    try {
+        console.log("Sending payload " + jsonPayload);
+        xhr.send(jsonPayload);
+        console.log("api response " + xhr.responseText);
+        var jsonObject = JSON.parse(xhr.responseText);
+        if(jsonObject.status === "success") return jsonObject.books;
+        else return null;
+    } catch (err) {
+        return null;
+    }
+}

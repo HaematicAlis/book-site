@@ -21,6 +21,7 @@ export class Page {
 const App = () => {
   const [currentUser, setCurrentUser] = useState(null)
   const [currentPage, setCurrentPage] = useState(Page.Login)
+  const [currentRequestForm, setCurrentRequestForm] = useState(null)
 
   console.log("Current user: " + currentUser)
 
@@ -38,7 +39,8 @@ const App = () => {
     case Page.ProfessorDashboard:
       return (
         <div className="App">
-           <ProfessorDashboard setCurrentPage={setCurrentPage} currentUser={setCurrentPage, currentUser}/>
+           <ProfessorDashboard setCurrentPage={setCurrentPage} currentUser={setCurrentPage, currentUser}
+           currentRequestForm={currentRequestForm} setCurrentRequestForm={setCurrentRequestForm}/>
        </div>);
     case Page.ModifyAdmin:
       return (

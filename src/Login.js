@@ -11,8 +11,8 @@ const Login = ({setCurrentPage, setCurrentUser}) => {
         if(usernameAttempt === "" && passwordAttempt === ""){
             //TODO: Remove this entire if statement
             console.log("HEY!!! I'M OVERRIDING THE USERNAME AND PASSWORD FOR DEV CONVENIENCE! THIS SHOULD BE REMOVED IN PROD")
-            usernameAttempt = "admin"
-            passwordAttempt = "admin"
+            usernameAttempt = "meaf"
+            passwordAttempt = "feam"
         }
         
         var data = login(usernameAttempt, passwordAttempt);
