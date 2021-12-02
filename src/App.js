@@ -3,12 +3,14 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
 import Login from './Login.js';
 import AdminDashboard from './AdminDashboard.js';
+import ProfessorDashboard from './ProfessorDashboard.js';
 import CreateAdmin from './CreateAdmin.js';
 
 // Enum for page types
 export class Page {
   static Login = new Page("Login")
   static AdminDashboard = new Page("AdminDashboard")
+  static ProfessorDashboard = new Page("ProfessorDashboard")
   static CreateAdmin = new Page("CreateAdmin")
 
   constructor(name) {
@@ -32,6 +34,11 @@ const App = () => {
       return (
         <div className="App">
            <AdminDashboard setCurrentPage={setCurrentPage} currentUser={setCurrentPage, currentUser}/>
+       </div>);
+    case Page.ProfessorDashboard:
+      return (
+        <div className="App">
+           <ProfessorDashboard setCurrentPage={setCurrentPage} currentUser={setCurrentPage, currentUser}/>
        </div>);
     case Page.CreateAdmin:
       return (

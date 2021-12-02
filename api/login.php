@@ -19,7 +19,12 @@
 
     if($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        echo '{"empId":' . $row["empId"] . ', "isAdmin":' . $row["isAdmin"] . ', "username":"' . $row["username"] . '", "password":"' . $row["password"] . '", "status":"success"}';
+        if($row["isAdmin"] > 0){
+            echo '{"empId":' . $row["empId"] . ', "isAdmin":' . $row["isAdmin"] . ', "username":"' . $row["username"] . '", "password":"' . $row["password"] . '", "status":"success"}';
+        } else {
+            echo '{"empId":' . $row["empId"] . ', "isAdmin":' . $row["isAdmin"] . ', "name":"' . $row["name"] . '", "email":"' . $row["email"] . '", "username":"' . $row["username"] . '", "password":"' . $row["password"] . '", "status":"success"}';
+
+        }
     } else {
         echo '{"status":"failure"}';
     }
