@@ -170,3 +170,21 @@ export const createBook = (isbn, title, authorNames, edition, publisher, request
         return null;
     }
 }
+
+export const createRequestForm = (empId, semester) => {
+    var jsonDict = { empId: empId, semester: semester };
+    var jsonPayload = JSON.stringify(jsonDict);
+
+    var url = urlBase + '/createRequestForm.php';
+    connect("POST", url);
+
+    try {
+        console.log("Sending payload " + jsonPayload);
+        xhr.send(jsonPayload);
+        console.log("api response " + xhr.responseText);
+        var jsonObject = JSON.parse(xhr.responseText);
+        return jsonObject
+    } catch (err) {
+        return null;
+    }
+}

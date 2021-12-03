@@ -1,6 +1,6 @@
 import React from 'react';
 import { Page } from './App.js';
-import { createBook, deleteBooksFromRequestForm, deleteRequestForm, getBooksFromRequestForm, getRequestForm } from './api.js';
+import { createBook, createRequestForm, deleteBooksFromRequestForm, deleteRequestForm, getBooksFromRequestForm, getRequestForm } from './api.js';
 
 const ProfessorDashboard = ({ setCurrentPage, currentUser, currentRequestForm, setCurrentRequestForm }) => {
 
@@ -26,7 +26,10 @@ const ProfessorDashboard = ({ setCurrentPage, currentUser, currentRequestForm, s
 
     const updateRequestForm = (semesterAttempt) => {
         var res = getRequestForm(semesterAttempt, currentUser.empId)
+        console.log("get request form result: " + res)
         if(res.status === "success"){
+            document.getElementById("flair").hidden = true
+            document.getElementById("createRequest").hidden = true
             setCurrentRequestForm(currentRequestForm = res)
             var bookres = getBooksFromRequestForm(currentRequestForm.requestId)
             console.log(bookres)
@@ -35,6 +38,9 @@ const ProfessorDashboard = ({ setCurrentPage, currentUser, currentRequestForm, s
             updateTable()
         } else {
             setCurrentRequestForm(null)
+            document.getElementById("flair").hidden = false
+            document.getElementById("createRequest").hidden = false
+            document.getElementById("flair").innerHTML = "Failed to find request form for semester " + semesterAttempt
             document.getElementById("requestFormGroup").hidden = true
         }
     }
@@ -79,6 +85,19 @@ const ProfessorDashboard = ({ setCurrentPage, currentUser, currentRequestForm, s
         createBook(isbn, title, author, edition, publisher, currentRequestForm.requestId)
         updateRequestForm(currentRequestForm.semester)
     }
+
+    const doCreateRequestForm = () => {
+        var newSemester = parseInt(document.getElementById("semesterEntry").value)
+        var res = createRequestForm(currentUser.empId, newSemester)
+        if(res.status === "success"){
+            document.getElementById("flair").hidden = true
+            document.getElementById("createRequest").hidden = true
+            updateRequestForm(newSemester)
+        } else {
+            document.getElementById("flair").hidden = false
+            document.getElementById("flair").innerHTML = "Failed to create request form for semester " + newSemester
+        }
+    }
     
     return (
         <div className="loginPage">
@@ -86,6 +105,12 @@ const ProfessorDashboard = ({ setCurrentPage, currentUser, currentRequestForm, s
             <h3>Professor Dashboard</h3>
             <p id="welcome">Welcome, Professor {currentUser.name}</p>
             <p id="empId">empId: {currentUser.empId}</p>
+            <div style={{
+                display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center",
+            }}>
+                <p id="flair" hidden={true}>Couldn't find a Request Form for semester ? </p>
+                <button style={{ margin: "1em" }} id="createRequest" hidden={true} type="button" onClick={doCreateRequestForm}>Create New</button><br />
+            </div>
             <div style={{
                 display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center",
             }}>

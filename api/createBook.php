@@ -21,9 +21,6 @@
     $checkSql = "SELECT * FROM book WHERE isbn=$isbn;";
     $insertSql = "INSERT INTO book (isbn, title, authorNames, edition, publisher, requestId) VALUES ($isbn, '$title', '$authors', $edition, '$publisher', $reqid)";
 
-    // TODO: This puts the correct entry into Employee, but it also adds a blank row but only sometimes.
-    // Doesn't hurt anyone but it'd be nice to fix
-
     $checkResult = mysqli_query($conn, $checkSql);
 
     if($checkResult->num_rows > 0) {
