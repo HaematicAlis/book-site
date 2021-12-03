@@ -98,6 +98,24 @@ export const getRequestForm = (semester, empId) => {
     }
 }
 
+export const getRequestForms = (semester) => {
+    var jsonDict = { semester: semester };
+    var jsonPayload = JSON.stringify(jsonDict);
+
+    var url = urlBase + '/getRequestForms.php';
+    connect("POST", url);
+
+    try {
+        console.log("Sending payload " + jsonPayload);
+        xhr.send(jsonPayload);
+        console.log("api response " + xhr.responseText);
+        var jsonObject = JSON.parse(xhr.responseText);
+        return jsonObject;
+    } catch (err) {
+        return null;
+    }
+}
+
 export const getBooksFromRequestForm = (requestId) => {
     var jsonDict = { requestId: requestId };
     var jsonPayload = JSON.stringify(jsonDict);
@@ -176,6 +194,24 @@ export const createRequestForm = (empId, semester) => {
     var jsonPayload = JSON.stringify(jsonDict);
 
     var url = urlBase + '/createRequestForm.php';
+    connect("POST", url);
+
+    try {
+        console.log("Sending payload " + jsonPayload);
+        xhr.send(jsonPayload);
+        console.log("api response " + xhr.responseText);
+        var jsonObject = JSON.parse(xhr.responseText);
+        return jsonObject
+    } catch (err) {
+        return null;
+    }
+}
+
+export const getEmployeeById = (empId) => {
+    var jsonDict = { empId: empId };
+    var jsonPayload = JSON.stringify(jsonDict);
+
+    var url = urlBase + '/getEmployeeById.php';
     connect("POST", url);
 
     try {

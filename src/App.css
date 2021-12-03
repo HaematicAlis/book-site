@@ -5,6 +5,11 @@
 .redbutton {background-color: #ff5454;} 
 .greenbutton {background-color: #1ee352;}
 
+.outlined {
+  border: 1px solid blue;
+}
+
+td.special { border: 2px double Red; }
 
 .center {
   margin-left: auto;
