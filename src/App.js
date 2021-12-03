@@ -5,6 +5,8 @@ import Login from './Login.js';
 import AdminDashboard from './AdminDashboard.js';
 import ProfessorDashboard from './ProfessorDashboard.js';
 import ModifyAdmin from './ModifyAdmin.js';
+import Register from './Register.js';
+import TempPassword from './TempPassword.js';
 
 // Enum for page types
 export class Page {
@@ -12,6 +14,8 @@ export class Page {
   static AdminDashboard = new Page("AdminDashboard")
   static ProfessorDashboard = new Page("ProfessorDashboard")
   static ModifyAdmin = new Page("ModifyAdmin")
+  static Register = new Page("Register")
+  static TempPassword = new Page("TempPassword")
 
   constructor(name) {
     this.name = name
@@ -47,6 +51,16 @@ const App = () => {
         <div className="App">
            <ModifyAdmin setCurrentPage={setCurrentPage} currentUser={currentUser}/>
        </div>);
+	case Page.Register:
+      return (
+        <div className="App">
+          <Register setCurrentPage={setCurrentPage} setCurrentUser={setCurrentUser}/>
+        </div>);
+	case Page.TempPassword:
+      return (
+        <div className="App">
+          <TempPassword setCurrentPage={setCurrentPage} setCurrentUser={setCurrentUser}/>
+        </div>);
   }
 }
 
