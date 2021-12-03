@@ -1,5 +1,24 @@
 export const urlBase = 'http://localhost/book-site/api';
 
+export const sendEmail = (recipients, subject, message) => {
+    var jsonDict = { recipients: recipients.join(), subject: subject, message: message };
+    var jsonPayload = JSON.stringify(jsonDict);
+
+    var url = urlBase + '/sendEmail.php';
+    connect("POST", url);
+
+    try {
+        console.log("Sending payload " + jsonPayload);
+        xhr.send(jsonPayload);
+        console.log("api response " + xhr.responseText);
+        var jsonObject = JSON.parse(xhr.responseText);
+        return jsonObject;
+    } catch (err) {
+        return null;
+    }
+}
+
+
 var xhr;
 
 const connect = (type, url) => {

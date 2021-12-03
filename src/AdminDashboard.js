@@ -1,5 +1,5 @@
 import React from 'react';
-import { getBooksFromRequestForm, getEmployeeById, getRequestForms } from './api.js';
+import { getBooksFromRequestForm, getEmployeeById, getRequestForms, sendEmail } from './api.js';
 import { Page } from './App.js'; 
 
 const AdminDashboard = ({setCurrentPage, currentUser}) => {
@@ -54,7 +54,15 @@ const AdminDashboard = ({setCurrentPage, currentUser}) => {
     }
 
     const doSendRequestFormEmail = () => {
-        // TODO: Implement
+        var recpt = document.getElementById("emailEntry").value
+        var semester = parseInt(document.getElementById("semesterEntry").value, 10)
+        var message = ""
+        message = '<html><body>';
+        message += '<h3>The list of all book requests for semester ' + semester + ' are shown below: </h3>'
+        message += document.getElementById("requestTable").outerHTML+''
+        message += '<a href="http://localhost:3000">Go to book order website</a>';
+        message += '</body></html>';
+        sendEmail([recpt], "Book Orders for UCF Semester " + semester, message)
     }
 
     return (
@@ -71,10 +79,10 @@ const AdminDashboard = ({setCurrentPage, currentUser}) => {
             </div>
             <table className="center" style={{border: "2px solid grey", borderCollapse: "collapse"}} id="requestFormGroup" hidden={true}> <tbody> <tr> <td>
                 <h3 id="tableHeader"> <u>Book Request Form for semester ?</u></h3>
-                <table style={{border: "2px solid grey"}} className="center">
+                <table id="requestTable" style={{border: "2px solid grey"}} className="center">
                     <thead>
                         <tr> 
-                            <th><th>Professor Name</th></th> <th>ISBN</th> <th>Title</th> <th>Authors</th> <th>Edition</th> <th>Publisher</th> 
+                            <th>Professor Name</th> <th>ISBN</th> <th>Title</th> <th>Authors</th> <th>Edition</th> <th>Publisher</th> 
                         </tr>
                     </thead>
                     <tbody id="table">
