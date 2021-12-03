@@ -2,6 +2,7 @@ import React from 'react';
 import { login } from './api.js';
 import { Page } from './App.js'; 
 
+
 const Login = ({setCurrentPage, setCurrentUser}) => {
 
     const doLogin = () => {
@@ -26,12 +27,26 @@ const Login = ({setCurrentPage, setCurrentUser}) => {
         }
     }
 
+    const doRegister = () => {
+		setCurrentPage(Page.Register)
+    }
+
+    const dotempPass = () => {
+		setCurrentPage(Page.TempPassword)
+    }
+
     return (
         <div className="loginPage">
+			
+		
             <h3>Login</h3>
             <input type="text" id="username" placeholder="username"/><br />
             <input type="text" id="password" placeholder="password"/><br />
-            <button type="button" onClick={doLogin}>Login</button><br />
+            <button type="button" onClick={doLogin}>Login</button>
+			<button type="button" onClick={doRegister}>Register</button><br />
+			<button type="button" onClick={dotempPass}>Forgot Password</button>
+						
+			
         </div>
     );
 }
