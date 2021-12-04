@@ -1,8 +1,8 @@
 import React from 'react';
 import { getBooksFromRequestForm, getEmployeeById, getRequestForms, sendEmail } from './api.js';
-import { Page } from './App.js'; 
+import { Page } from './App.js';
 
-const AdminDashboard = ({setCurrentPage, currentUser}) => {
+const AdminDashboard = ({ setCurrentPage, currentUser }) => {
 
     const doGoToModifyAdmin = () => {
         setCurrentPage(Page.ModifyAdmin);
@@ -11,17 +11,17 @@ const AdminDashboard = ({setCurrentPage, currentUser}) => {
     const addRequestFormToTable = (requestForm, i) => {
         var books = getBooksFromRequestForm(requestForm.requestId)
         var employee = getEmployeeById(requestForm.empId)
-        if(employee === null) return;
+        if (employee === null) return;
 
         books.forEach(book => {
-            document.getElementById("table").innerHTML += 
-            '<tr'+(i%2 === 0 ? ' style="background-color: rgb(221, 221, 221)"':'') + 
-            '> <td>'+ employee.name +
-            '</td> <td>' + book.isbn + 
-            '</td> <td>' + book.title + 
-            '</td> <td>' + book.authorNames + 
-            '</td> <td>' + book.edition + 
-            '</td> <td>' + book.publisher + '</td> </tr>'
+            document.getElementById("table").innerHTML +=
+                '<tr' + (i % 2 === 0 ? ' style="background-color: rgb(221, 221, 221)"' : '') +
+                '> <td>' + employee.name +
+                '</td> <td>' + book.isbn +
+                '</td> <td>' + book.title +
+                '</td> <td>' + book.authorNames +
+                '</td> <td>' + book.edition +
+                '</td> <td>' + book.publisher + '</td> </tr>'
             i++
         });
         return i
@@ -38,18 +38,18 @@ const AdminDashboard = ({setCurrentPage, currentUser}) => {
     const updateRequestForms = (semesterAttempt) => {
         var res = getRequestForms(semesterAttempt)
         console.log("get request form result: " + res)
-        if(res.status === "success"){
+        if (res.status === "success") {
             document.getElementById("requestFormGroup").hidden = false
             document.getElementById("tableHeader").innerHTML = "All Book Requests for Semester " + semesterAttempt
-            updateTable(res.forms)    
-        }else{
+            updateTable(res.forms)
+        } else {
             document.getElementById("requestFormGroup").hidden = true
         }
     }
 
     const doGetRequestForms = () => {
         var semesterAttempt = document.getElementById("semesterEntry").value;
-        if(semesterAttempt.length === 0) return;
+        if (semesterAttempt.length === 0) return;
         updateRequestForms(parseInt(semesterAttempt, 10))
     }
 
@@ -59,7 +59,7 @@ const AdminDashboard = ({setCurrentPage, currentUser}) => {
         var message = ""
         message = '<html><body>';
         message += '<h3>The list of all book requests for semester ' + semester + ' are shown below: </h3>'
-        message += document.getElementById("requestTable").outerHTML+''
+        message += document.getElementById("requestTable").outerHTML + ''
         message += '<a href="http://localhost:3000">Go to book order website</a>';
         message += '</body></html>';
         sendEmail([recpt], "Book Orders for UCF Semester " + semester, message)
@@ -77,25 +77,25 @@ const AdminDashboard = ({setCurrentPage, currentUser}) => {
                 <input type="text" id="semesterEntry" placeholder="semester" /><br />
                 <button style={{ margin: "1em" }} type="button" onClick={doGetRequestForms}>View Request Forms</button><br />
             </div>
-            <table className="center" style={{border: "2px solid grey", borderCollapse: "collapse"}} id="requestFormGroup" hidden={true}> <tbody> <tr> <td>
+            <table className="center" style={{ border: "2px solid grey", borderCollapse: "collapse" }} id="requestFormGroup" hidden={true}> <tbody> <tr> <td>
                 <h3 id="tableHeader"> <u>Book Request Form for semester ?</u></h3>
-                <table id="requestTable" style={{border: "2px solid grey"}} className="center">
+                <table id="requestTable" style={{ border: "2px solid grey" }} className="center">
                     <thead>
-                        <tr> 
-                            <th>Professor Name</th> <th>ISBN</th> <th>Title</th> <th>Authors</th> <th>Edition</th> <th>Publisher</th> 
+                        <tr>
+                            <th>Professor Name</th> <th>ISBN</th> <th>Title</th> <th>Authors</th> <th>Edition</th> <th>Publisher</th>
                         </tr>
                     </thead>
                     <tbody id="table">
 
                     </tbody>
                 </table>
-                <br/>
-            <div style={{
-                display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center",
-            }}>
-                <input type="text" id="emailEntry" placeholder="email" /><br />
-                <button style={{ margin: "1em" }} type="button" onClick={doSendRequestFormEmail}>Send Final List</button><br />
-            </div>
+                <br />
+                <div style={{
+                    display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center",
+                }}>
+                    <input type="text" id="emailEntry" placeholder="email" /><br />
+                    <button style={{ margin: "1em" }} type="button" onClick={doSendRequestFormEmail}>Send Final List</button><br />
+                </div>
             </td></tr></tbody></table>
         </div>
     );

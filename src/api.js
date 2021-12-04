@@ -165,7 +165,7 @@ export const getBooksFromRequestForm = (requestId) => {
         xhr.send(jsonPayload);
         console.log("api response " + xhr.responseText);
         var jsonObject = JSON.parse(xhr.responseText);
-        if(jsonObject.status === "success") return jsonObject.books;
+        if (jsonObject.status === "success") return jsonObject.books;
         else return null;
     } catch (err) {
         return null;

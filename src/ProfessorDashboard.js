@@ -1,24 +1,24 @@
 import React from 'react';
-import { Page } from './App.js';
+import Page from './App.js'
 import { createBook, createRequestForm, deleteBooksFromRequestForm, deleteRequestForm, getBooksFromRequestForm, getRequestForm } from './api.js';
 
-const ProfessorDashboard = ({ setCurrentPage, currentUser, currentRequestForm, setCurrentRequestForm }) => {
+const ProfessorDashboard = ({ setCurrentPage, currentUser, setCurrentUser, currentRequestForm, setCurrentRequestForm }) => {
 
     const updateTable = () => {
-        if(currentRequestForm != null){
+        if (currentRequestForm != null) {
             console.log(currentRequestForm)
             document.getElementById("requestFormGroup").hidden = false
             document.getElementById("tableHeader").innerHTML = "Book Request Form for semester " + currentRequestForm.semester
             document.getElementById("table").innerHTML = ""
             var i = 0
             currentRequestForm.books.forEach(book => {
-                document.getElementById("table").innerHTML += 
-                '<tr'+(i%2 === 0 ? ' style="background-color: rgb(221, 221, 221)"':'') + 
-                '> <td><input type="checkbox" id="check'+ i++ +'"></td><td> ' + book.isbn + 
-                '</td> <td>' + book.title + 
-                '</td> <td>' + book.authorNames + 
-                '</td> <td>' + book.edition + 
-                '</td> <td>' + book.publisher + '</td> </tr>'
+                document.getElementById("table").innerHTML +=
+                    '<tr' + (i % 2 === 0 ? ' style="background-color: rgb(221, 221, 221)"' : '') +
+                    '> <td><input type="checkbox" id="check' + i++ + '"></td><td> ' + book.isbn +
+                    '</td> <td>' + book.title +
+                    '</td> <td>' + book.authorNames +
+                    '</td> <td>' + book.edition +
+                    '</td> <td>' + book.publisher + '</td> </tr>'
             });
 
         }
@@ -27,7 +27,7 @@ const ProfessorDashboard = ({ setCurrentPage, currentUser, currentRequestForm, s
     const updateRequestForm = (semesterAttempt) => {
         var res = getRequestForm(semesterAttempt, currentUser.empId)
         console.log("get request form result: " + res)
-        if(res.status === "success"){
+        if (res.status === "success") {
             document.getElementById("flair").hidden = true
             document.getElementById("createRequest").hidden = true
             setCurrentRequestForm(currentRequestForm = res)
@@ -47,7 +47,7 @@ const ProfessorDashboard = ({ setCurrentPage, currentUser, currentRequestForm, s
 
     const doGetRequestForm = () => {
         var semesterAttempt = document.getElementById("semesterEntry").value;
-        if(semesterAttempt.length === 0) return;
+        if (semesterAttempt.length === 0) return;
         updateRequestForm(parseInt(semesterAttempt, 10))
     }
 
@@ -55,7 +55,7 @@ const ProfessorDashboard = ({ setCurrentPage, currentUser, currentRequestForm, s
         var i = 0
         var isbns = []
         currentRequestForm.books.forEach(book => {
-            if(document.getElementById("check"+ i++).checked){
+            if (document.getElementById("check" + i++).checked) {
                 isbns.push(book.isbn)
             }
         });
@@ -64,7 +64,7 @@ const ProfessorDashboard = ({ setCurrentPage, currentUser, currentRequestForm, s
         console.log(res)
         updateRequestForm(currentRequestForm.semester)
     }
-    
+
     const doDeleteRequestForm = () => {
         var isbns = []
         currentRequestForm.books.forEach(book => {
@@ -75,7 +75,7 @@ const ProfessorDashboard = ({ setCurrentPage, currentUser, currentRequestForm, s
         setCurrentRequestForm(null)
         document.getElementById("requestFormGroup").hidden = true
     }
-    
+
     const doAddNewBook = () => {
         var isbn = parseInt(document.getElementById("isbnEntry").value, 10);
         var title = document.getElementById("titleEntry").value;
@@ -89,7 +89,7 @@ const ProfessorDashboard = ({ setCurrentPage, currentUser, currentRequestForm, s
     const doCreateRequestForm = () => {
         var newSemester = parseInt(document.getElementById("semesterEntry").value)
         var res = createRequestForm(currentUser.empId, newSemester)
-        if(res.status === "success"){
+        if (res.status === "success") {
             document.getElementById("flair").hidden = true
             document.getElementById("createRequest").hidden = true
             updateRequestForm(newSemester)
@@ -98,10 +98,16 @@ const ProfessorDashboard = ({ setCurrentPage, currentUser, currentRequestForm, s
             document.getElementById("flair").innerHTML = "Failed to create request form for semester " + newSemester
         }
     }
-    
+
+    const doLogout = () => {
+        setCurrentPage(Page.Login)
+        setCurrentUser(null)
+        setCurrentRequestForm(null)
+    }
+
     return (
         <div className="loginPage">
-            
+
             <h3>Professor Dashboard</h3>
             <p id="welcome">Welcome, Professor {currentUser.name}</p>
             <p id="empId">empId: {currentUser.empId}</p>
@@ -117,21 +123,21 @@ const ProfessorDashboard = ({ setCurrentPage, currentUser, currentRequestForm, s
                 <input type="text" id="semesterEntry" placeholder="semester" /><br />
                 <button style={{ margin: "1em" }} type="button" onClick={doGetRequestForm}>View/Edit Request Form</button><br />
             </div>
-            <table className="center" style={{border: "2px solid grey"}} id="requestFormGroup" hidden={true}> <tbody> <tr> <td>
+            <table className="center" style={{ border: "2px solid grey" }} id="requestFormGroup" hidden={true}> <tbody> <tr> <td>
                 <h3 id="tableHeader"> <u>Book Request Form for semester ?</u></h3>
-                <table style={{border: "2px solid grey"}} className="center">
+                <table style={{ border: "2px solid grey" }} className="center">
                     <thead>
-                        <tr> 
-                            <th></th> <th>ISBN</th> <th>Title</th> <th>Authors</th> <th>Edition</th> <th>Publisher</th> 
+                        <tr>
+                            <th></th> <th>ISBN</th> <th>Title</th> <th>Authors</th> <th>Edition</th> <th>Publisher</th>
                         </tr>
                     </thead>
                     <tbody id="table">
 
                     </tbody>
                 </table>
-                <br/>
-                <div id="newBookEntry" > 
-                    <table className="center" style={{border: "2px solid grey"}}>
+                <br />
+                <div id="newBookEntry" >
+                    <table className="center" style={{ border: "2px solid grey" }}>
                         <tbody>
                             <tr><td></td><th>Add New Book</th></tr>
                             <tr>
@@ -154,6 +160,7 @@ const ProfessorDashboard = ({ setCurrentPage, currentUser, currentRequestForm, s
                     <button style={{ margin: "1em" }} type="button" id="deleteRequestForm" className="redbutton" onClick={doDeleteRequestForm}>Delete Request Form</button><br />
                 </div>
             </td></tr></tbody></table>
+            <button style={{ margin: "1em" }} type="button" className="redbutton" onClick={doLogout}>Logout</button><br />
         </div>
     );
 }
