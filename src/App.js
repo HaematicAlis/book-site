@@ -38,7 +38,7 @@ const App = () => {
     case Page.AdminDashboard:
       return (
         <div className="App">
-          <AdminDashboard setCurrentPage={setCurrentPage} currentUser={currentUser} />
+          <AdminDashboard setCurrentPage={setCurrentPage} currentUser={currentUser} setCurrentUser={setCurrentUser} />
         </div>);
     case Page.ProfessorDashboard:
       return (

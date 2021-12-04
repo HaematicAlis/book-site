@@ -2,7 +2,7 @@ import React from 'react';
 import { getBooksFromRequestForm, getEmployeeById, getRequestForms, sendEmail } from './api.js';
 import { Page } from './App.js';
 
-const AdminDashboard = ({ setCurrentPage, currentUser }) => {
+const AdminDashboard = ({ setCurrentPage, currentUser, setCurrentUser }) => {
 
     const doGoToModifyAdmin = () => {
         setCurrentPage(Page.ModifyAdmin);
@@ -65,6 +65,11 @@ const AdminDashboard = ({ setCurrentPage, currentUser }) => {
         sendEmail([recpt], "Book Orders for UCF Semester " + semester, message)
     }
 
+    const doLogout = () => {
+        setCurrentPage(Page.Login)
+        setCurrentUser(null)
+    }
+
     return (
         <div className="loginPage">
             <h3>Admin Dashboard</h3>
@@ -97,6 +102,7 @@ const AdminDashboard = ({ setCurrentPage, currentUser }) => {
                     <button style={{ margin: "1em" }} type="button" onClick={doSendRequestFormEmail}>Send Final List</button><br />
                 </div>
             </td></tr></tbody></table>
+            <button style={{ margin: "1em" }} type="button" className="redbutton" onClick={doLogout}>Logout</button><br />
         </div>
     );
 }
