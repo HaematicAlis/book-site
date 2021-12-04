@@ -1,5 +1,5 @@
 import React from 'react';
-import { registerStaff } from './api.js';
+import { login, registerStaff } from './api.js';
 import { Page } from './App.js';
 
 
@@ -23,11 +23,10 @@ const Register = ({ setCurrentPage, setCurrentUser }) => {
             document.getElementById("flair").hidden = false
             document.getElementById("flair").innerHTML = "Failed to make new admin account."
         } else {
+            setCurrentPage(Page.ProfessorDashboard)
+            setCurrentUser(login(usernameAttempt, passwordAttempt))
             document.getElementById("flair").hidden = true
         }
-
-        setCurrentPage(Page.Login)
-
     }
 
     return (
