@@ -43,6 +43,7 @@ const TempPassword = ({ setCurrentPage, setCurrentUser }) => {
         message += '</body></html>';
 		sendEmail([recpt], "Password change for" + usernameAttempt, message)
 		
+		setCurrentPage(Page.Login)
     }
 	
 	function randPassword(length) {
