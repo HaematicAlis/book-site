@@ -74,7 +74,6 @@ const AdminDashboard = ({ setCurrentPage, currentUser, setCurrentUser }) => {
         <div className="loginPage">
             <h3>Admin Dashboard</h3>
             <p id="welcome">Welcome, {currentUser.username}</p>
-            <p id="empId">empId: {currentUser.empId}</p>
             <button type="newAdminButton" onClick={doGoToModifyAdmin}>Modify Admin Accounts</button><br />
             <div style={{
                 display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center",

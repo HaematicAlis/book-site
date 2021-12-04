@@ -110,7 +110,6 @@ const ProfessorDashboard = ({ setCurrentPage, currentUser, setCurrentUser, curre
 
             <h3>Professor Dashboard</h3>
             <p id="welcome">Welcome, Professor {currentUser.name}</p>
-            <p id="empId">empId: {currentUser.empId}</p>
             <div style={{
                 display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center",
             }}>
