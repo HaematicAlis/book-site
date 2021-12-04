@@ -63,8 +63,8 @@ export const createAdmin = (username, password) => {
     }
 }
 
-export const registerStaff = (username, password) => {
-    var jsonDict = { username: username, password: password };
+export const registerStaff = (username, password, name, email) => {
+    var jsonDict = { username: username, password: password, name: name, email: email};
     var jsonPayload = JSON.stringify(jsonDict);
 
     var url = urlBase + '/registerStaff.php';

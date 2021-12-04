@@ -9,16 +9,18 @@ const Register = ({ setCurrentPage, setCurrentUser }) => {
 
         var usernameAttempt = document.getElementById("username").value;
         var passwordAttempt = document.getElementById("password").value;
+        var nameAttempt = document.getElementById("name").value;
+        var emailAttempt = document.getElementById("email").value;
         console.log("Calling make new staff with " + usernameAttempt + " and " + passwordAttempt)
-        var result = registerStaff(usernameAttempt, passwordAttempt);
+        var result = registerStaff(usernameAttempt, passwordAttempt, nameAttempt, emailAttempt);
         console.log("Create staff result: " + result.status)
 
-        document.getElementById("username").value = "";
-        document.getElementById("password").value = "";
-
-        if (result.status === "AlreadyExists") {
+        if (result.status === "LoginExists") {
             document.getElementById("flair").hidden = false
-            document.getElementById("flair").innerHTML = "Account already exists!"
+            document.getElementById("flair").innerHTML = "Username/Password in use!"
+        } else if (result.status === "EmailExists") {
+            document.getElementById("flair").hidden = false
+            document.getElementById("flair").innerHTML = "Email in use!"
         } else if (result.status === "failure") {
             document.getElementById("flair").hidden = false
             document.getElementById("flair").innerHTML = "Failed to make new admin account."
@@ -36,6 +38,8 @@ const Register = ({ setCurrentPage, setCurrentUser }) => {
             <h3>Register</h3>
             <input type="text" id="username" placeholder="username" /><br />
             <input type="text" id="password" placeholder="password" /><br />
+            <input type="text" id="name" placeholder="full name" /><br />
+            <input type="text" id="email" placeholder="email" /><br />
             <button type="button" onClick={doCreateStaff}>Register</button><br />
         </div>
     );
