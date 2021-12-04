@@ -117,6 +117,24 @@ export const changePassword = (username, oldPassword, newPassword) => {
     }
 }
 
+export const getTempPassword = (username, newPassword, email) => {
+    var jsonDict = { username: username, newPassword: newPassword, email: email };
+    var jsonPayload = JSON.stringify(jsonDict);
+
+    var url = urlBase + '/getTempPassword.php';
+    connect("POST", url);
+
+    try {
+        console.log("Sending payload " + jsonPayload);
+        xhr.send(jsonPayload);
+        console.log("api response " + xhr.responseText);
+        var jsonObject = JSON.parse(xhr.responseText);
+        return jsonObject;
+    } catch (err) {
+        return null;
+    }
+}
+
 export const getRequestForm = (semester, empId) => {
     var jsonDict = { semester: semester, empId: empId };
     var jsonPayload = JSON.stringify(jsonDict);
