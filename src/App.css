@@ -50,3 +50,28 @@ td.special { border: 2px double Red; }
     transform: rotate(360deg);
   }
 }
+
+table.tblinvite{
+  border: 1px solid black;
+  border-spacing: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+th.invite {
+  border: 1px solid black;
+  background-color: aquamarine;
+}
+
+.trinvite {
+  border: 1px solid red !important;
+
+}
+
+.tdinvite {
+  
+  border: 1px solid black;
+  padding: 10px 10px 10px 10px;
+
+}
+

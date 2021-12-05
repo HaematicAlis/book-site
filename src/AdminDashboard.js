@@ -8,6 +8,10 @@ const AdminDashboard = ({ setCurrentPage, currentUser, setCurrentUser }) => {
         setCurrentPage(Page.ModifyAdmin);
     }
 
+    const doGoToRequests = () => {
+        setCurrentPage(Page.Requests);
+    }
+
     const addRequestFormToTable = (requestForm, i) => {
         var books = getBooksFromRequestForm(requestForm.requestId)
         var employee = getEmployeeById(requestForm.empId)
@@ -75,6 +79,7 @@ const AdminDashboard = ({ setCurrentPage, currentUser, setCurrentUser }) => {
             <h3>Admin Dashboard</h3>
             <p id="welcome">Welcome, {currentUser.username}</p>
             <button type="newAdminButton" onClick={doGoToModifyAdmin}>Modify Admin Accounts</button><br />
+            <button type="newAdminButton" onClick={doGoToRequests}>Requests Page</button><br />
             <div style={{
                 display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center",
             }}>
