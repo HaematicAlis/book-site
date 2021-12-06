@@ -14,8 +14,7 @@ $delSql = "DELETE FROM scheduler WHERE email='';";
 
 if (mysqli_query($conn, $delSql)) {
     echo '{"status":"success"}';
-}
-else {
+} else {
     echo '{"status":"failure"}';
 }
 

@@ -17,8 +17,7 @@ $insertSql =  "UPDATE scheduler SET flag= 1 WHERE sid=$sid;";
 
 if (mysqli_query($conn, $insertSql)) {
     echo '{"status":"success"}';
-}
-else {
+} else {
     echo '{"status":"failure"}';
 }
 

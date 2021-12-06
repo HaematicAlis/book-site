@@ -70,7 +70,7 @@ const App = () => {
           <Requests setCurrentPage={setCurrentPage} setCurrentUser={setCurrentUser} />
         </div>);
   }
-  
+
 }
 
 export default App;

@@ -18,8 +18,7 @@ $insertSql = "INSERT INTO scheduler (email, schDate, flag) VALUES ('$email', '$s
 
 if (mysqli_query($conn, $insertSql)) {
     echo '{"status":"success"}';
-}
-else {
+} else {
     echo '{"status":"failure"}';
 }
 
