@@ -80,10 +80,12 @@ const Requests = ({setCurrentPage, currentUser}) => {
     const updateTable = (employeeList) => {
         document.getElementById("table").innerHTML = ""
         employeeList.forEach(employ => {
-            document.getElementById("table").innerHTML +=
+            if(employ.email.length > 10){
+                document.getElementById("table").innerHTML +=
                 '<tr> <td class="tdinvite">' + '<input class="emailCheck" type="checkbox" id = "' + employ.email + '"></input>' +
                 '</td> <td class="tdinvite">' + employ.name +
                 '</td> <td class="tdinvite">' + employ.email +'</td> </tr>';
+            }
             
 /*             document.getElementById()
  */
