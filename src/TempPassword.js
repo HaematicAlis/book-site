@@ -56,6 +56,10 @@ const TempPassword = ({ setCurrentPage, setCurrentUser }) => {
 		}
 	return result;
 	}
+	
+	const prevPage = () => {
+		setCurrentPage(Page.Login)
+	}
 
 
 
@@ -66,7 +70,8 @@ const TempPassword = ({ setCurrentPage, setCurrentUser }) => {
             <h3>Reset Password</h3>
 			<input type="text" id="username" placeholder="username" /><br />
             <input type="text" id="email" placeholder="email" /><br />
-            <button type="button" onClick={doSendEmail}>Send Email</button><br />
+            <button type="button" onClick={doSendEmail}>Send Email</button>
+			<button type="button" onClick={prevPage}>Go Back</button><br />
 			
 			
         </div>
