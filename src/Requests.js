@@ -1,7 +1,7 @@
 import React from 'react';
 import { Page } from '../src/App.js'; 
 import { sendEmail } from '../src/api.js';
-import { getBooksFromRequestForm, getRequestForms, getAllProfessors, getEmployeeById} from '../src/api.js';
+import { createScheduleEmail, getAllProfessors, checkScheduleEmail, removeBlankEmail} from '../src/api.js';
 
 
 
@@ -12,7 +12,7 @@ const Requests = ({setCurrentPage, currentUser}) => {
         var recpt = document.getElementById("emailEntry").value
         var message = ""
         
-        if(recpt == '')
+        if(recpt === '')
         {
             alert('Email Missing')
         }
@@ -37,7 +37,7 @@ const Requests = ({setCurrentPage, currentUser}) => {
         var checked = false;
         var date = document.getElementById("dateDeadline").value
         
-        if(date == '')
+        if(date === '')
         {
             alert('Please set a deadline')
         }
@@ -49,7 +49,6 @@ const Requests = ({setCurrentPage, currentUser}) => {
                 {
                     var emailAdd = recpt[i].id;
                     checked = true;
-                    // Replace this line with multiple recipients
                     var message = ""
                     message = '<html><body>';
                     message += '<h3>Professor please be aware of our deadline</h3>'
@@ -103,7 +102,7 @@ const Requests = ({setCurrentPage, currentUser}) => {
 
         } else {
             document.getElementById("requestFormGroup").hidden = true
-            document.getElementById("dateDeadline").hidden = false
+            document.getElementById("dateDeadline").hidden = true
             document.getElementById("deadline").hidden = true
         }
     }
@@ -131,9 +130,37 @@ const Requests = ({setCurrentPage, currentUser}) => {
 
     }
 
+    const updateDropdown2 = (employeeList) => 
+    {
+        var selectElement = document.getElementById("professorList2");
+        var i, list = selectElement.options.length - 1;
+        for(i = list; i >= 0; i--) {
+           selectElement.remove(i);
+        }
+        var option = document.createElement('option');
+        option.text = "Select a Professor";
+        option.value = "";
+        selectElement.add(option);
+
+        for(var j = 0; j < employeeList.length; j++ )
+        {
+            var option = document.createElement('option');
+            option.text = employeeList[j].name;
+            option.value = employeeList[j].email;
+            selectElement.add(option);
+        }
+        selectElement.onchange = addEmail2;
+
+    }
+
     const addEmail = () => {
         var selectElement = document.getElementById("professorList");
         document.getElementById("emailEntry").value = selectElement.value;
+    }
+
+    const addEmail2 = () => {
+        var selectElement = document.getElementById("professorList2");
+        document.getElementById("emailEntry2").value = selectElement.value;
     }
 
     const getProfessorList2 = () => {
@@ -149,20 +176,80 @@ const Requests = ({setCurrentPage, currentUser}) => {
         } 
         else {
             document.getElementById("emailEntry").hidden = true
-            document.getElementById("emailButton").hidden = false
+            document.getElementById("emailButton").hidden = true
         }
     }
 
+    const getProfessorList3 = () => {
+        document.getElementById("professorList2").hidden = false;
 
-   /*  if (document.readyState === "complete") {
+        var res = getAllProfessors()
+        console.log("get request form result: " + res)
+        if (res.status === "success") {
+            updateDropdown2(res.employ)
+            document.getElementById("emailEntry2").hidden = false
+            document.getElementById("emailButton2").hidden = false
+            document.getElementById("scheduleDate").hidden = false
+            
+
+        } 
+        else {
+            document.getElementById("emailEntry2").hidden = true
+            document.getElementById("emailButton2").hidden = true
+            document.getElementById("scheduleDate").hidden = true
+
+        }
+    }
+
+    if (document.readyState === "complete") 
+    {
         setTimeout(() => {
             getProfessorList2();
             
-        }, 5000);
-      } else {
+        }, 0);
+    } 
+    else
+    {
         window.addEventListener('load', getProfessorList2);
         return () => document.removeEventListener('load', getProfessorList2);
-      } */
+    }
+
+    if (document.readyState === "complete") 
+    {
+        setTimeout(() => {
+            getProfessorList3();
+            
+        }, 0);
+    } 
+    else
+    {
+        window.addEventListener('load', getProfessorList3);
+        return () => document.removeEventListener('load', getProfessorList3);
+    }
+
+    const scheduleInviteEmail = () => {
+        var recpt = document.getElementById("emailEntry2").value;
+        var date = document.getElementById("scheduleDate").value;
+        var res = checkScheduleEmail(recpt, date);
+
+        if (res.status === "NotExists") {
+        
+            createScheduleEmail(recpt, date);
+            alert('The invite is scheduled');
+
+            document.getElementById("professorList2").selectedindex = 0;
+            document.getElementById("scheduleDate").value = '';
+            document.getElementById("emailEntry2").value = '';
+                        
+        }
+        else
+        {
+            alert('This invite was aready scheduled');
+        }
+
+        removeBlankEmail();
+
+    }
 
     return (
         
@@ -183,19 +270,26 @@ const Requests = ({setCurrentPage, currentUser}) => {
 
                     </tbody>
             </table>
-            <button style={{ margin: "1em"}} id="deadline" hidden={true} type="button" onClick={doSendDeadlineEmail}> send Deadline</button><br />
+            <button style={{ margin: "1em"}} id="deadline" hidden={true} type="button" onClick={doSendDeadlineEmail}> Send Deadline</button><br />
             
             <h3>Schedule Reminder</h3>
-            <p id="changeFlair" hidden={true}>Hey!!!</p>
-            <input type="text" id="newPassword" placeholder="new password"/><br />
-            <br />
-            <br />
+            <div style={{
+                display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center",
+            }}>
+                <p id="changeFlair" hidden={true}>Hey!!!</p>
+                <select id="professorList2" hidden={true}></select>    
+                <br />
+                <input type="text" id="emailEntry2" placeholder="email" hidden={true}/><br />
+                <input type="date" id="scheduleDate" hidden={true}/><br />
+                <button style={{ margin: "1em" }} id="emailButton2" type="button" onClick={scheduleInviteEmail} hidden={true}>Schedule Reminder</button><br />
+                <br />
+            </div>
             <h3>Send a Invite</h3>
             <div style={{
                 display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center",
             }}>
-                <button style={{ margin: "1em" }} type="button" onClick={getProfessorList2}>Invite Professor</button><br />
-                
+{/*                 <button style={{ margin: "1em" }} type="button" onClick={getProfessorList2}>Invite Professor</button><br />
+ */}                
                 <select id="professorList" hidden={true}>
                 </select>
 

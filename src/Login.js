@@ -1,5 +1,5 @@
 import React from 'react';
-import { login } from './api.js';
+import { login, runScheduler, updateScheduler, sendEmail } from './api.js';
 import { Page } from './App.js';
 
 
@@ -34,6 +34,45 @@ const Login = ({ setCurrentPage, setCurrentUser }) => {
     const dotempPass = () => {
         setCurrentPage(Page.TempPassword)
     }
+
+    const processScheduler = () => {
+        var schArray = runScheduler();
+        var i;
+        var temp = schArray.sch;
+        var count = temp.length;
+        var message = ""
+
+        for (i = 0; i < count; i++)
+        {
+            if(temp[i].email !== '')
+            {
+                message = '<html><body>';
+                message += '<h3>Professor please submit your book request</h3>'
+                message += 'Time is running out<br>'
+                message += '<a href="http://localhost:3000">Go to book order website</a>';
+                message += '</body></html>';
+                sendEmail([temp[i].email], "Please enter your book requests", message);
+                updateScheduler(temp[i].sid);
+            }
+                        
+        }
+    } 
+
+    processScheduler();
+
+    // if (document.readyState === "complete") 
+    // {
+    //     setTimeout(() => {
+    //         processScheduler();
+          
+    //     }, 1000);
+    // } 
+    // else
+    // {
+    //      window.addEventListener('load', processScheduler);
+    //     return () => document.removeEventListener('load', processScheduler);
+    // } 
+    
 
     return (
         <div className="loginPage">

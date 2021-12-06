@@ -299,3 +299,93 @@ export const getAllProfessors = (/* isAdmin */) => {
 
    
 }
+
+export const createScheduleEmail = (email, sDate) => {
+    var jsonDict = { email: email, sDate: sDate };
+    var jsonPayload = JSON.stringify(jsonDict);
+
+    var url = urlBase + '/createScheduleEmail.php';
+    connect("POST", url);
+
+    try {
+        console.log("Sending payload " + jsonPayload);
+        xhr.send(jsonPayload);
+        console.log("api response " + xhr.responseText);
+        var jsonObject = JSON.parse(xhr.responseText);
+        return jsonObject
+    } catch (err) {
+        return null;
+    }
+}
+
+export const checkScheduleEmail = (email, sDate) => {
+    var jsonDict = { email: email, sDate: sDate };
+    var jsonPayload = JSON.stringify(jsonDict);
+
+    var url = urlBase + '/checkScheduleEmail.php';
+    connect("POST", url);
+
+    try {
+        console.log("Sending payload " + jsonPayload);
+        xhr.send(jsonPayload);
+        console.log("api response " + xhr.responseText);
+        var jsonObject = JSON.parse(xhr.responseText);
+        return jsonObject
+    } catch (err) {
+        return null;
+    }
+}
+
+export const runScheduler = (/* date */) => {
+    // var jsonDict = { date: date };
+    // var jsonPayload = JSON.stringify(jsonDict);
+
+    var url = urlBase + '/runScheduler.php';
+    connect("POST", url);
+
+    try {
+        console.log("Sending payload "  /* jsonPayload */);
+        xhr.send(/* jsonPayload */);
+        console.log("api response " + xhr.responseText);
+        var jsonObject = JSON.parse(xhr.responseText);
+        return jsonObject
+    } catch (err) {
+        return null;
+    }
+}
+
+export const updateScheduler = (sid) => {
+    var jsonDict = { sid : sid };
+    var jsonPayload = JSON.stringify(jsonDict);
+
+    var url = urlBase + '/updateScheduler.php';
+    connect("POST", url);
+
+    try {
+        console.log("Sending payload " + jsonPayload);
+        xhr.send(jsonPayload);
+        console.log("api response " + xhr.responseText);
+        var jsonObject = JSON.parse(xhr.responseText);
+        return jsonObject
+    } catch (err) {
+        return null;
+    }
+}
+
+export const removeBlankEmail = (/* date */) => {
+    // var jsonDict = { date: date };
+    // var jsonPayload = JSON.stringify(jsonDict);
+
+    var url = urlBase + '/removeBlankEmail.php';
+    connect("POST", url);
+
+    try {
+        console.log("Sending payload "  /* jsonPayload */);
+        xhr.send(/* jsonPayload */);
+        console.log("api response " + xhr.responseText);
+        var jsonObject = JSON.parse(xhr.responseText);
+        return jsonObject
+    } catch (err) {
+        return null;
+    }
+}
