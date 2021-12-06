@@ -79,7 +79,8 @@ const AdminDashboard = ({ setCurrentPage, currentUser, setCurrentUser }) => {
             <h3>Admin Dashboard</h3>
             <p id="welcome">Welcome, {currentUser.username}</p>
             <button type="newAdminButton" onClick={doGoToModifyAdmin}>Modify Admin Accounts</button><br />
-            <button type="newAdminButton" onClick={doGoToRequests}>Requests Page</button><br />
+            <br/>
+            <button type="newAdminButton" onClick={doGoToRequests}>Reminders/Requests</button><br />
             <div style={{
                 display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center",
             }}>
