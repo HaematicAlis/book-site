@@ -21,8 +21,7 @@ $result = mysqli_query($conn, $sql);
 
 if ($result->num_rows > 0) {
     echo '{"status":"AlreadyExists"}';
-} 
-else {
+} else {
     echo '{"status":"NotExists"}';
 }
 
