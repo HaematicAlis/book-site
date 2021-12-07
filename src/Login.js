@@ -10,10 +10,7 @@ const Login = ({ setCurrentPage, setCurrentUser }) => {
         var passwordAttempt = document.getElementById("password").value;
 
         if (usernameAttempt === "" && passwordAttempt === "") {
-            //TODO: Remove this entire if statement
-            console.log("HEY!!! I'M OVERRIDING THE USERNAME AND PASSWORD FOR DEV CONVENIENCE! THIS SHOULD BE REMOVED IN PROD")
-            usernameAttempt = "meaf"
-            passwordAttempt = "feam"
+            return
         }
 
         var data = login(usernameAttempt, passwordAttempt);
@@ -22,6 +19,7 @@ const Login = ({ setCurrentPage, setCurrentUser }) => {
             if (data.isAdmin > 0) setCurrentPage(Page.AdminDashboard)
             else setCurrentPage(Page.ProfessorDashboard)
         } else {
+            alert('Username/password entered incorrect')
             document.getElementById("username").value = "";
             document.getElementById("password").value = "";
         }

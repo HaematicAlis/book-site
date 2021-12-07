@@ -1,5 +1,5 @@
 import React from 'react';
-import Page from './App.js'
+import { Page } from './App.js';
 import { createBook, createRequestForm, deleteBooksFromRequestForm, deleteRequestForm, getBooksFromRequestForm, getRequestForm } from './api.js';
 
 const ProfessorDashboard = ({ setCurrentPage, currentUser, setCurrentUser, currentRequestForm, setCurrentRequestForm }) => {
@@ -105,6 +105,11 @@ const ProfessorDashboard = ({ setCurrentPage, currentUser, setCurrentUser, curre
         setCurrentRequestForm(null)
     }
 
+    const doGoToChangePassword = () => {
+        console.log("Going to change password")
+        setCurrentPage(Page.ChangePassword)
+    }
+
     return (
         <div className="loginPage">
 
@@ -159,7 +164,12 @@ const ProfessorDashboard = ({ setCurrentPage, currentUser, setCurrentUser, curre
                     <button style={{ margin: "1em" }} type="button" id="deleteRequestForm" className="redbutton" onClick={doDeleteRequestForm}>Delete Request Form</button><br />
                 </div>
             </td></tr></tbody></table>
-            <button style={{ margin: "1em" }} type="button" className="redbutton" onClick={doLogout}>Logout</button><br />
+            <div style={{
+                display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center",
+            }}>
+                <button style={{ margin: "1em" }} type="button" className="redbutton" onClick={doLogout}>Logout</button><br />
+                <button style={{ margin: "1em" }} type="button" onClick={doGoToChangePassword}>Change Password</button><br />
+            </div>
         </div>
     );
 }

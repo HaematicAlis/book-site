@@ -7,6 +7,7 @@ import ModifyAdmin from './ModifyAdmin.js';
 import Register from './Register.js';
 import TempPassword from './TempPassword.js';
 import Requests from './Requests.js';
+import ChangePassword from './ChangePassword';
 
 
 // Enum for page types
@@ -18,6 +19,7 @@ export class Page {
   static Register = new Page("Register")
   static TempPassword = new Page("TempPassword")
   static Requests = new Page("Requests")
+  static ChangePassword = new Page("ChangePassword")
 
   constructor(name) {
     this.name = name
@@ -30,6 +32,7 @@ const App = () => {
   const [currentRequestForm, setCurrentRequestForm] = useState(null)
 
   console.log("Current user: " + currentUser)
+  console.log(currentPage)
 
   switch (currentPage) {
     default:
@@ -68,6 +71,11 @@ const App = () => {
       return (
         <div className="App">
           <Requests setCurrentPage={setCurrentPage} setCurrentUser={setCurrentUser} />
+        </div>);
+    case Page.ChangePassword:
+      return (
+        <div className="App">
+          <ChangePassword setCurrentPage={setCurrentPage} currentUser={currentUser} setCurrentUser={setCurrentUser} />
         </div>);
   }
 
