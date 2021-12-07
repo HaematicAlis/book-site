@@ -45,7 +45,7 @@ const Register = ({ setCurrentPage, setCurrentUser }) => {
             <input type="text" id="name" placeholder="full name" /><br />
             <input type="text" id="email" placeholder="email" /><br />
             <div style={{
-                    display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center",
+                display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center",
             }}>
                 <button type="button" onClick={doCreateStaff}>Register</button><br />
                 <button type="button" onClick={doGoBack}>Back</button><br />
