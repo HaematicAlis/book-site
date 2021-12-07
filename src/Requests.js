@@ -20,6 +20,11 @@ const Requests = ({ setCurrentPage, currentUser }) => {
             message += '<a href="http://localhost:3000">Go to book order website</a>';
             message += '</body></html>';
             sendEmail([recpt], "Please enter your book requests", message)
+            alert('The invite is scheduled');
+
+            document.getElementById("professorList").selectedindex = 0;
+            document.getElementById("emailEntry").value = '';
+
         }
 
     }
@@ -226,9 +231,9 @@ const Requests = ({ setCurrentPage, currentUser }) => {
             alert('The invite is scheduled');
 
             document.getElementById("professorList2").selectedindex = 0;
-            document.getElementById("scheduleDate").value = '';
             document.getElementById("emailEntry2").value = '';
-
+            document.getElementById("scheduleDate").value = '';
+                        
         }
         else {
             alert('This invite was aready scheduled');

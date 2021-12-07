@@ -43,11 +43,11 @@ const Login = ({ setCurrentPage, setCurrentUser }) => {
         for (i = 0; i < count; i++) {
             if (temp[i].email !== '') {
                 message = '<html><body>';
-                message += '<h3>Professor please submit your book request</h3>'
-                message += 'Time is running out<br>'
+                message += '<h3>This is a scheduled reminder</h3>'
+                message += 'Professors please submit your book requests time is running out<br>'
                 message += '<a href="http://localhost:3000">Go to book order website</a>';
                 message += '</body></html>';
-                sendEmail([temp[i].email], "Please enter your book requests", message);
+                sendEmail([temp[i].email], "Scheduled Reminder: Please enter your book requests", message);
                 updateScheduler(temp[i].sid);
             }
 
