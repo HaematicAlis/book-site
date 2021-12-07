@@ -1,23 +1,19 @@
 import React from 'react';
-import { Page } from '../src/App.js'; 
+import { Page } from '../src/App.js';
 import { sendEmail } from '../src/api.js';
-import { createScheduleEmail, getAllProfessors, checkScheduleEmail, removeBlankEmail} from '../src/api.js';
+import { createScheduleEmail, getAllProfessors, checkScheduleEmail, removeBlankEmail } from '../src/api.js';
+
+const Requests = ({ setCurrentPage, currentUser }) => {
 
 
-
-const Requests = ({setCurrentPage, currentUser}) => {
-    
-    
     const doSendInviteEmail = () => {
         var recpt = document.getElementById("emailEntry").value
         var message = ""
-        
-        if(recpt === '')
-        {
+
+        if (recpt === '') {
             alert('Email Missing')
         }
-        else
-        {
+        else {
             message = '<html><body>';
             message += '<h3>Professor please submit your book request</h3>'
             message += 'Time is running out<br>'
@@ -41,17 +37,13 @@ const Requests = ({setCurrentPage, currentUser}) => {
         var i = 0;
         var checked = false;
         var date = document.getElementById("dateDeadline").value
-        
-        if(date === '')
-        {
+
+        if (date === '') {
             alert('Please set a deadline')
         }
-        else
-        {
-            for(i;i < count;i++)
-            {
-                if(recpt[i].checked)
-                {
+        else {
+            for (i; i < count; i++) {
+                if (recpt[i].checked) {
                     var emailAdd = recpt[i].id;
                     checked = true;
                     var message = ""
@@ -59,24 +51,22 @@ const Requests = ({setCurrentPage, currentUser}) => {
                     message += '<h3>Professor please be aware of our deadline</h3>'
                     message += 'The deadline is '
                     message += date + '.<br/>'
-                    message += '<a href="http://localhost:3000">Go to book order website now</a>' ;
+                    message += '<a href="http://localhost:3000">Go to book order website now</a>';
                     message += '</body></html>';
                     sendEmail([emailAdd], "Please enter your book requests", message)
                 }
                 recpt[i].checked = false;
             }
-            if(checked)
-            {
+            if (checked) {
                 alert('Message Sent')
             }
-            else
-            {
+            else {
                 alert('Please Select Check Box')
             }
         }
-    
+
     }
-    
+
 
     const doGoBack = () => {
         setCurrentPage(Page.AdminDashboard)
@@ -85,13 +75,15 @@ const Requests = ({setCurrentPage, currentUser}) => {
     const updateTable = (employeeList) => {
         document.getElementById("table").innerHTML = ""
         employeeList.forEach(employ => {
-            document.getElementById("table").innerHTML +=
-                '<tr> <td class="tdinvite">' + '<input class="emailCheck" type="checkbox" id = "' + employ.email + '"></input>' +
-                '</td> <td class="tdinvite">' + employ.name +
-                '</td> <td class="tdinvite">' + employ.email +'</td> </tr>';
-            
-/*             document.getElementById()
- */
+            if (employ.email.length > 10) {
+                document.getElementById("table").innerHTML +=
+                    '<tr> <td class="tdinvite">' + '<input class="emailCheck" type="checkbox" id = "' + employ.email + '"></input>' +
+                    '</td> <td class="tdinvite">' + employ.name +
+                    '</td> <td class="tdinvite">' + employ.email + '</td> </tr>';
+            }
+
+            /*             document.getElementById()
+             */
         })
     }
 
@@ -112,47 +104,47 @@ const Requests = ({setCurrentPage, currentUser}) => {
         }
     }
 
-    const updateDropdown = (employeeList) => 
-    {
+    const updateDropdown = (employeeList) => {
         var selectElement = document.getElementById("professorList");
         var i, list = selectElement.options.length - 1;
-        for(i = list; i >= 0; i--) {
-           selectElement.remove(i);
+        for (i = list; i >= 0; i--) {
+            selectElement.remove(i);
         }
         var option = document.createElement('option');
         option.text = "Select a Professor";
         option.value = "";
         selectElement.add(option);
 
-        for(var j = 0; j < employeeList.length; j++ )
-        {
-            var option = document.createElement('option');
-            option.text = employeeList[j].name;
-            option.value = employeeList[j].email;
-            selectElement.add(option);
+        for (var j = 0; j < employeeList.length; j++) {
+            if (employeeList[j].email.length > 10) {
+                var option = document.createElement('option');
+                option.text = employeeList[j].name;
+                option.value = employeeList[j].email;
+                selectElement.add(option);
+            }
         }
         selectElement.onchange = addEmail;
 
     }
 
-    const updateDropdown2 = (employeeList) => 
-    {
+    const updateDropdown2 = (employeeList) => {
         var selectElement = document.getElementById("professorList2");
         var i, list = selectElement.options.length - 1;
-        for(i = list; i >= 0; i--) {
-           selectElement.remove(i);
+        for (i = list; i >= 0; i--) {
+            selectElement.remove(i);
         }
         var option = document.createElement('option');
         option.text = "Select a Professor";
         option.value = "";
         selectElement.add(option);
 
-        for(var j = 0; j < employeeList.length; j++ )
-        {
-            var option = document.createElement('option');
-            option.text = employeeList[j].name;
-            option.value = employeeList[j].email;
-            selectElement.add(option);
+        for (var j = 0; j < employeeList.length; j++) {
+            if (employeeList[j].email.length > 10) {
+                var option = document.createElement('option');
+                option.text = employeeList[j].name;
+                option.value = employeeList[j].email;
+                selectElement.add(option);
+            }
         }
         selectElement.onchange = addEmail2;
 
@@ -178,7 +170,7 @@ const Requests = ({setCurrentPage, currentUser}) => {
             document.getElementById("emailEntry").hidden = false
             document.getElementById("emailButton").hidden = false
 
-        } 
+        }
         else {
             document.getElementById("emailEntry").hidden = true
             document.getElementById("emailButton").hidden = true
@@ -195,9 +187,9 @@ const Requests = ({setCurrentPage, currentUser}) => {
             document.getElementById("emailEntry2").hidden = false
             document.getElementById("emailButton2").hidden = false
             document.getElementById("scheduleDate").hidden = false
-            
 
-        } 
+
+        }
         else {
             document.getElementById("emailEntry2").hidden = true
             document.getElementById("emailButton2").hidden = true
@@ -206,28 +198,24 @@ const Requests = ({setCurrentPage, currentUser}) => {
         }
     }
 
-    if (document.readyState === "complete") 
-    {
+    if (document.readyState === "complete") {
         setTimeout(() => {
             getProfessorList2();
-            
+
         }, 0);
-    } 
-    else
-    {
+    }
+    else {
         window.addEventListener('load', getProfessorList2);
         return () => document.removeEventListener('load', getProfessorList2);
     }
 
-    if (document.readyState === "complete") 
-    {
+    if (document.readyState === "complete") {
         setTimeout(() => {
             getProfessorList3();
-            
+
         }, 0);
-    } 
-    else
-    {
+    }
+    else {
         window.addEventListener('load', getProfessorList3);
         return () => document.removeEventListener('load', getProfessorList3);
     }
@@ -238,7 +226,7 @@ const Requests = ({setCurrentPage, currentUser}) => {
         var res = checkScheduleEmail(recpt, date);
 
         if (res.status === "NotExists") {
-        
+
             createScheduleEmail(recpt, date);
             alert('The invite is scheduled');
 
@@ -247,8 +235,7 @@ const Requests = ({setCurrentPage, currentUser}) => {
             document.getElementById("scheduleDate").value = '';
                         
         }
-        else
-        {
+        else {
             alert('This invite was aready scheduled');
         }
 
@@ -257,35 +244,35 @@ const Requests = ({setCurrentPage, currentUser}) => {
     }
 
     return (
-        
+
         <div className="loginPage">
             <h3>Broadcast Request Deadline</h3>
             <p id="flair" hidden={true}>Hey!!!</p>
-            <button style={{ margin: "1em" }} type="button" onClick={getProfessorList1}> get all professors</button><br />
+            <button style={{ margin: "1em" }} type="button" onClick={getProfessorList1}> Refresh Professors</button><br />
             <br />
-            <input type="date" id="dateDeadline" hidden={true}/><br />
-            <br/>
-            <table className="tblinvite" id="requestFormGroup" hidden={true}> 
-                    <thead className="invite">
-                        <tr>
-                            <th className="invite">Send</th> <th className="invite">Professor Name</th> <th className="invite">Email</th>
-                        </tr>
-                    </thead>
-                    <tbody id="table">
+            <input type="date" id="dateDeadline" hidden={true} /><br />
+            <br />
+            <table className="tblinvite" id="requestFormGroup" hidden={true}>
+                <thead className="invite">
+                    <tr>
+                        <th className="invite">Send</th> <th className="invite">Professor Name</th> <th className="invite">Email</th>
+                    </tr>
+                </thead>
+                <tbody id="table">
 
-                    </tbody>
+                </tbody>
             </table>
-            <button style={{ margin: "1em"}} id="deadline" hidden={true} type="button" onClick={doSendDeadlineEmail}> Send Deadline</button><br />
-            
+            <button style={{ margin: "1em" }} id="deadline" hidden={true} type="button" onClick={doSendDeadlineEmail}> Send Deadline</button><br />
+
             <h3>Schedule Reminder</h3>
             <div style={{
                 display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center",
             }}>
                 <p id="changeFlair" hidden={true}>Hey!!!</p>
-                <select id="professorList2" hidden={true}></select>    
+                <select id="professorList2" hidden={true}></select>
                 <br />
-                <input type="text" id="emailEntry2" placeholder="email" hidden={true}/><br />
-                <input type="date" id="scheduleDate" hidden={true}/><br />
+                <input type="text" id="emailEntry2" placeholder="email" hidden={true} /><br />
+                <input type="date" id="scheduleDate" hidden={true} /><br />
                 <button style={{ margin: "1em" }} id="emailButton2" type="button" onClick={scheduleInviteEmail} hidden={true}>Schedule Reminder</button><br />
                 <br />
             </div>
@@ -293,23 +280,23 @@ const Requests = ({setCurrentPage, currentUser}) => {
             <div style={{
                 display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center",
             }}>
-{/*                 <button style={{ margin: "1em" }} type="button" onClick={getProfessorList2}>Invite Professor</button><br />
- */}                
+                {/*                 <button style={{ margin: "1em" }} type="button" onClick={getProfessorList2}>Invite Professor</button><br />
+ */}
                 <select id="professorList" hidden={true}>
                 </select>
 
-                
+
                 <br />
-        
-                <input type="text" id="emailEntry" placeholder="email" hidden={true}/><br />
+
+                <input type="text" id="emailEntry" placeholder="email" hidden={true} /><br />
                 <button style={{ margin: "1em" }} id="emailButton" type="button" onClick={doSendInviteEmail} hidden={true}>Send Invite</button><br />
             </div>
-            
+
             <button type="button" onClick={doGoBack}>Back To Dashboard</button><br />
         </div>
     );
 
-    
+
 }
 
 export default Requests;

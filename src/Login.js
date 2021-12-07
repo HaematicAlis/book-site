@@ -42,10 +42,8 @@ const Login = ({ setCurrentPage, setCurrentUser }) => {
         var count = temp.length;
         var message = ""
 
-        for (i = 0; i < count; i++)
-        {
-            if(temp[i].email !== '')
-            {
+        for (i = 0; i < count; i++) {
+            if (temp[i].email !== '') {
                 message = '<html><body>';
                 message += '<h3>This is a scheduled reminder</h3>'
                 message += 'Professors please submit your book requests time is running out<br>'
@@ -54,9 +52,9 @@ const Login = ({ setCurrentPage, setCurrentUser }) => {
                 sendEmail([temp[i].email], "Scheduled Reminder: Please enter your book requests", message);
                 updateScheduler(temp[i].sid);
             }
-                        
+
         }
-    } 
+    }
 
     processScheduler();
 
@@ -64,7 +62,7 @@ const Login = ({ setCurrentPage, setCurrentUser }) => {
     // {
     //     setTimeout(() => {
     //         processScheduler();
-          
+
     //     }, 1000);
     // } 
     // else
@@ -72,7 +70,7 @@ const Login = ({ setCurrentPage, setCurrentUser }) => {
     //      window.addEventListener('load', processScheduler);
     //     return () => document.removeEventListener('load', processScheduler);
     // } 
-    
+
 
     return (
         <div className="loginPage">

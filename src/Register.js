@@ -31,6 +31,10 @@ const Register = ({ setCurrentPage, setCurrentUser }) => {
         }
     }
 
+    const doGoBack = () => {
+        setCurrentPage(Page.Login)
+    }
+
     return (
         <div className="registerPage">
             <p id="flair" hidden={true}>Hey!!!</p>
@@ -40,7 +44,12 @@ const Register = ({ setCurrentPage, setCurrentUser }) => {
             <input type="text" id="password" placeholder="password" /><br />
             <input type="text" id="name" placeholder="full name" /><br />
             <input type="text" id="email" placeholder="email" /><br />
-            <button type="button" onClick={doCreateStaff}>Register</button><br />
+            <div style={{
+                display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center",
+            }}>
+                <button type="button" onClick={doCreateStaff}>Register</button><br />
+                <button type="button" onClick={doGoBack}>Back</button><br />
+            </div>
         </div>
     );
 
